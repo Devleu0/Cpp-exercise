@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C++ 기초 인터랙티브 튜토리얼</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chosen Palette: Blue Slate -->
+    <!-- Application Structure Plan: A single-page application with a fixed sidebar navigation for thematic learning (Syntax, Operators, I/O, Control Flow). The main area displays content for the selected topic. This structure breaks down the linear document into manageable, self-contained lessons, improving user focus and navigation compared to a long scroll. Sub-topics within sections are presented as distinct cards to visually separate concepts. -->
+    <!-- Visualization & Content Choices: Report Info: C++ concepts (e.g., 'if' statement) -> Goal: Educate -> Presentation Method: A content card with explanation text and a corresponding code block -> Interaction: Click navigation to switch topics -> Justification: This classic documentation/tutorial layout is intuitive. Code blocks are styled for readability. No data charts are needed as the content is conceptual and code-based. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nanum+Gothic+Coding&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9; /* slate-100 */
+        }
+        .font-coding {
+            font-family: 'Nanum Gothic Coding', monospace;
+        }
+        .nav-link {
+            transition: all 0.2s ease-in-out;
+        }
+        .nav-link.active {
+            background-color: #e0f2fe; /* sky-100 */
+            color: #0c4a6e; /* sky-900 */
+            font-weight: 600;
+        }
+        .nav-link:hover:not(.active) {
+            background-color: #f0f9ff; /* sky-50 */
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .code-block {
+            background-color: #1e293b; /* slate-800 */
+            color: #e2e8f0; /* slate-200 */
+            border-radius: 0.5rem;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+        .concept-card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <div class="flex h-screen">
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar" class="w-64 bg-white shadow-lg flex-shrink-0 p-4 transition-transform duration-300 ease-in-out -translate-x-full sm:translate-x-0 z-20">
+            <h1 class="text-xl font-bold text-sky-800 mb-6 border-b pb-4">C++ 기초 문법</h1>
+            <nav id="nav-menu">
+                <a href="#syntax" class="nav-link block p-3 rounded-lg mb-2 active">기본 문법 및 타입</a>
+                <a href="#operators" class="nav-link block p-3 rounded-lg mb-2">연산자</a>
+                <a href="#io" class="nav-link block p-3 rounded-lg mb-2">입출력 스트림</a>
+                <a href="#control-flow" class="nav-link block p-3 rounded-lg mb-2">제어문</a>
+            </nav>
+        </aside>
+
+        <!-- Mobile Menu Button -->
+        <button id="menu-toggle" class="sm:hidden fixed top-4 left-4 z-30 p-2 bg-white rounded-md shadow-lg">
+             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-16 6h16" />
+            </svg>
+        </button>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-6 md:p-10 overflow-y-auto">
+            <div id="content-container" class="max-w-4xl mx-auto">
+
+                <!-- Section 1: Basic Syntax & Data Types -->
+                <section id="syntax" class="content-section active">
+                    <h1 class="text-4xl font-bold mb-4 text-slate-900">기본 문법 및 데이터 타입</h1>
+                    <p class="text-lg text-slate-600 mb-8">프로그램을 구성하는 가장 작은 단위인 문법과 데이터를 저장하는 다양한 방식을 알아봅니다. 모든 코드의 기초가 되는 중요한 개념들입니다.</p>
+
+                    <div class="concept-card">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">주석, 변수, 상수</h3>
+                            <p class="text-slate-600 mb-4"><b>주석</b>은 코드에 대한 설명을, <b>변수</b>는 변경 가능한 데이터를, <b>상수</b>는 변경할 수 없는 데이터를 저장하는 데 사용됩니다.</p>
+                        </div>
+                        <div class="code-block font-coding"><pre><code>// 변수 선언 및 초기화
+int userAge = 25;
+
+// 상수 선언 (값 변경 불가)
+const double PI = 3.14159;</code></pre></div>
+                    </div>
+
+                    <div class="concept-card">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">기본 데이터 타입</h3>
+                            <p class="text-slate-600 mb-4">데이터의 종류를 나타내며, 각 타입마다 메모리 크기와 표현할 수 있는 값의 범위가 다릅니다.</p>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left">
+                                    <thead class="bg-slate-50">
+                                        <tr>
+                                            <th class="p-3 font-semibold">데이터 타입</th>
+                                            <th class="p-3 font-semibold">설명</th>
+                                            <th class="p-3 font-semibold">예시</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y">
+                                        <tr><td class="p-3"><code>int</code></td><td class="p-3">정수</td><td class="p-3"><code>10, -100</code></td></tr>
+                                        <tr><td class="p-3"><code>char</code></td><td class="p-3">단일 문자</td><td class="p-3"><code>'A', '5'</code></td></tr>
+                                        <tr><td class="p-3"><code>double</code></td><td class="p-3">실수</td><td class="p-3"><code>3.14159</code></td></tr>
+                                        <tr><td class="p-3"><code>bool</code></td><td class="p-3">불리언 (참/거짓)</td><td class="p-3"><code>true, false</code></td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Section 2: Operators -->
+                <section id="operators" class="content-section">
+                    <h1 class="text-4xl font-bold mb-4 text-slate-900">연산자 (Operators)</h1>
+                    <p class="text-lg text-slate-600 mb-8">값을 조작하거나 비교하는 데 사용되는 기호입니다. 연산자를 통해 복잡한 계산과 논리적인 판단을 수행할 수 있습니다.</p>
+
+                    <div class="concept-card">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">산술, 관계, 논리 연산자</h3>
+                            <p class="text-slate-600 mb-4"><b>산술 연산자</b>는 계산을, <b>관계 연산자</b>는 비교를, <b>논리 연산자</b>는 여러 조건을 조합하는 데 사용됩니다.</p>
+                        </div>
+                        <div class="code-block font-coding"><pre><code>int a = 10, b = 4;
+// 산술: a % b  // 결과: 2 (나머지)
+// 관계: a > b   // 결과: true (1)
+// 논리: (a > 5) && (b < 5) // 결과: true (1)
+</code></pre></div>
+                    </div>
+
+                    <div class="concept-card">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">증감, 대입 연산자</h3>
+                            <p class="text-slate-600 mb-4"><b>증감 연산자</b>는 값을 1씩 변경하며, <b>대입 연산자</b>는 변수에 값을 할당합니다.</p>
+                        </div>
+                        <div class="code-block font-coding"><pre><code>int x = 5;
+x++; // x는 6이 됨
+
+int z = 10;
+z += 5; // z = z + 5와 동일, z는 15가 됨
+</code></pre></div>
+                    </div>
+                </section>
+
+                <!-- Section 3: I/O Streams -->
+                <section id="io" class="content-section">
+                    <h1 class="text-4xl font-bold mb-4 text-slate-900">입출력 스트림 (I/O Stream)</h1>
+                    <p class="text-lg text-slate-600 mb-8">콘솔을 통해 사용자로부터 데이터를 입력받거나 화면에 데이터를 출력하는 기능입니다. 프로그램과 사용자 간의 상호작용을 가능하게 합니다.</p>
+
+                    <div class="concept-card">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">`std::cout`과 `std::cin`</h3>
+                            <p class="text-slate-600 mb-4">`iostream` 라이브러리에 포함되어 있으며, `std::cout`은 화면 출력, `std::cin`은 키보드 입력을 처리합니다.</p>
+                        </div>
+                        <div class="code-block font-coding"><pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+int main() {
+    std::string name;
+    std::cout << "이름을 입력하세요: ";
+    std::cin >> name;
+    std::cout << "안녕하세요, " << name << "님!" << std::endl;
+    return 0;
+}
+</code></pre></div>
+                    </div>
+                </section>
+
+                <!-- Section 4: Control Flow -->
+                <section id="control-flow" class="content-section">
+                    <h1 class="text-4xl font-bold mb-4 text-slate-900">제어문 (Control Flow)</h1>
+                    <p class="text-lg text-slate-600 mb-8">코드의 실행 흐름을 조건이나 반복에 따라 제어하는 구문입니다. 프로그램이 동적으로 상황에 맞춰 동작하도록 만듭니다.</p>
+
+                    <div class="concept-card">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">조건문 (`if`, `switch`)</h3>
+                            <p class="text-slate-600 mb-4">`if`문은 주어진 조건의 참/거짓에 따라, `switch`문은 변수의 값에 따라 다른 코드 블록을 실행합니다.</p>
+                        </div>
+                        <div class="code-block font-coding"><pre><code>int score = 85;
+if (score >= 80) {
+    std::cout << "B 학점 이상입니다." << std::endl;
+}</code></pre></div>
+                    </div>
+
+                    <div class="concept-card">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">반복문 (`for`, `while`)</h3>
+                            <p class="text-slate-600 mb-4">`for`문은 정해진 횟수만큼, `while`문은 특정 조건이 참인 동안 코드를 반복 실행합니다.</p>
+                        </div>
+                        <div class="code-block font-coding"><pre><code>// 0부터 4까지 5번 반복
+for (int i = 0; i < 5; i++) {
+    std::cout << i << " ";
+}
+// 출력: 0 1 2 3 4
+</code></pre></div>
+                    </div>
+                    
+                    <div class="concept-card">
+                        <div class="p-6">
+                            <h3 class="text-xl font-semibold mb-2">분기문 (`break`, `continue`)</h3>
+                            <p class="text-slate-600 mb-4">`break`는 반복문을 즉시 탈출하고, `continue`는 현재 반복을 중단하고 다음 반복으로 넘어갑니다.</p>
+                        </div>
+                        <div class="code-block font-coding"><pre><code>for (int i = 0; i < 10; i++) {
+    if (i == 3) continue; // 3은 건너뜀
+    if (i == 7) break;    // 7에서 반복 중단
+    std::cout << i << " ";
+}
+// 출력: 0 1 2 4 5 6 
+</code></pre></div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navMenu = document.getElementById('nav-menu');
+            const menuToggle = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+
+            function switchView(hash) {
+                // Hide all content sections
+                document.querySelectorAll('.content-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show the target section
+                const activeSection = document.querySelector(hash);
+                if (activeSection) {
+                    activeSection.classList.add('active');
+                }
+
+                // Update active state in nav links
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                const activeLink = document.querySelector(`.nav-link[href="${hash}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
+            }
+
+            navMenu.addEventListener('click', (e) => {
+                if (e.target.tagName === 'A') {
+                    e.preventDefault();
+                    const hash = e.target.getAttribute('href');
+                    // Use history.pushState to update URL without page reload
+                    history.pushState(null, null, hash);
+                    switchView(hash);
+
+                    if (window.innerWidth < 640) { // sm breakpoint in Tailwind
+                        sidebar.classList.add('-translate-x-full');
+                    }
+                }
+            });
+
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.toggle('-translate-x-full');
+            });
+            
+            // Handle back/forward browser buttons
+            window.addEventListener('popstate', () => {
+                switchView(window.location.hash || '#syntax');
+            });
+
+            // Initial view based on hash or default to #syntax
+            switchView(window.location.hash || '#syntax');
+        });
+    </script>
+</body>
+</html>
