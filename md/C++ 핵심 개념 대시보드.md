@@ -138,5 +138,3 @@ C++ 핵심 개념
     
     // *(ptr + 2)는 arr[2]와 동일한 표현
     std::cout << "3번째 원소: " << *(ptr + 2) << std::endl; // 출력: 30
-
-sidebar.classList.toggle('-translate-x-full'); }); window.addEventListener('popstate', () => { switchView(window.location.hash || '#functions'); }); switchView(window.location.hash || '#functions'); });
