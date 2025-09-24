@@ -13,7 +13,6 @@ int add(int a, int b) {
 }
 */
 
-
 int main()
 {
     // I/O basics
@@ -115,14 +114,6 @@ int main()
     num_ref = 10;
     cout << num << std::endl;   //10
     */
-
-
-
-
-
-    
-
-
     return 0;
 }
 
