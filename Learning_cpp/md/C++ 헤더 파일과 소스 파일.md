@@ -15,7 +15,7 @@ C++ 프로젝트에서 파일 관리는 코드의 유지보수성과 확장성�
 
 ---
 
-## 2. 헤더 파일(.h/.hpp)이란? <a name="header-file"></a
+## 2. 헤더 파일(.h/.hpp)이란? <a name="header-file"></a>
 헤더 파일은 클래스, 함수, 상수, 매크로 선언 등 인터페이스(interface)를 정의하는 파일입니다.  
 헤더 파일은 일반적으로 구현(implementation)을 포함하지 않고, 선언(declaration)만 포함합니다.
 
