@@ -32,7 +32,7 @@ int main() {
 
     // 게임 시작 메시지 출력
     std::cout << "=================================\n";
-    std::cout << "      숫자 맞추기 게임 🎯\n";
+    std::cout << "      숫자 맞추기 게임  \n";
     std::cout << "=================================\n";
     std::cout << "1부터 100 사이의 숫자를 맞춰보세요!\n\n";
 
@@ -43,14 +43,14 @@ int main() {
         tries++; // 시도 횟수 증가
 
         if (guess > secretNumber) {
-            std::cout << ">> 너무 큽니다! 🤔\n\n";
+            std::cout << ">> 너무 큽니다! \n\n";
         }
         else if (guess < secretNumber) {
-            std::cout << ">> 너무 작습니다! 👀\n\n";
+            std::cout << ">> 너무 작습니다! \n\n";
         }
         else {
             std::cout << "\n=================================\n";
-            std::cout << "🎉 정답입니다! 축하합니다! 🎉\n";
+            std::cout << "###  정답입니다! 축하합니다! ###\n";
             std::cout << "정답은 " << secretNumber << "이었습니다.\n";
             std::cout << "시도 횟수: " << tries << "번\n";
             std::cout << "=================================\n";
