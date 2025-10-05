@@ -70,7 +70,7 @@
 
 ---
 
-###  <details> <summary>1: BFS (너비 우선 탐색)</summary>
+<details> <summary>`1: BFS (너비 우선 탐색)`</summary>
 
 ```cpp
 #include <bits/stdc++.h>
@@ -96,9 +96,8 @@ void bfs(int start) {
 }
 ```
 </details>
----
 
-###  <details> <summary>2: DFS (깊이 우선 탐색)</summary>
+<details> <summary>`2: DFS (깊이 우선 탐색)`</summary>
 
 ```cpp
 void dfs(int cur) {
@@ -110,9 +109,8 @@ void dfs(int cur) {
 }
 ```
 </details> 
----
 
-### <details><summary> 3: Dijkstra (최단 경로)</summary>
+<details><summary> `3: Dijkstra (최단 경로)`</summary>
 
 ```cpp
 #include <bits/stdc++.h>
@@ -141,10 +139,9 @@ void dijkstra(int start) {
     }
 }
 ```
+</details>
 
----
-
-### <details><summary>4: Kruskal (MST)</summary>
+<details><summary>`4: Kruskal (MST)`</summary>
 
 ```cpp
 struct Edge { int w, u, v; };
@@ -175,7 +172,10 @@ int kruskal(int n) {
     return total;
 }
 ```
+
 </details>
+
+---
 
 ## 5. 자주 쓰는 조합
 
