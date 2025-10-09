@@ -1,17 +1,17 @@
-#  C / C++ 출력 형식 제어 완전 정리
+#  C / C++ 출력 형식 
 
 ##  개요
-C와 C++은 서로 다른 출력 시스템을 가지고 있지만, 모두 **출력 형식을 세밀하게 제어**할 수 있는 기능을 제공  
+C와 C++은 **출력 형식을 세밀하게 제어**할 수 있는 기능을 제공  
 
-1.  **C 스타일 (`printf`, `sprintf`)**
+1.  **C 스타일 (`printf`, `puts`)**
 2.  **C++ 스타일 (`std::cout`, `<iomanip>`)**
 3.  **C++20 이후 (`std::format`, `std::print`)**
 
 ---
 
-#  1. C 스타일 (`printf`, `sprintf`)
+#  1. C 스타일 (`printf`, `puts`)
 
-##  기본 형식
+##  `printf`
 C 에서는 `printf()` 계열 함수를 사용하여 **서식 지정자(format specifier)** 로 출력 형식을 제어
 
 ```cpp
@@ -30,7 +30,7 @@ int main() {
 
 ---
 
-##  주요 서식 지정자
+##  서식 지정자 종류류
 
 | 형식 | 의미 | 예시 출력 |
 |------|------|------------|
@@ -75,9 +75,22 @@ printf("%#x\n", 255);    // 0xff
 
 ---
 
+## `puts`
+가장 단순하고 빠름, 문자열 끝에 **자동 개행(`\n`)**이 붙음, `printf`와 달리 문자열 내 `%` 등 포맷 문자가 있어도 그대로 출력됨
+
+```cpp
+#include <cstdio>
+
+int main() {
+    puts("Hello, world!");
+}
+```
+
+---
+
 #  2. C++ 스트림 출력 (`<iostream>`, `<iomanip>`)
 
-C++은 **형식화된 스트림 기반 출력**을 제공
+C++은 **형식적인 스트림 기반 출력**
 
 ```cpp
 #include <iostream>
@@ -92,7 +105,7 @@ int main() {
 
 ---
 
-##  주요 조정자(manipulator)
+##  주요 manipulator
 
 | 조정자 | 설명 |
 |--------|------|
@@ -128,6 +141,23 @@ int main() {
     cout << fixed << setprecision(2) << x << endl; // 12.35
 }
 ```
+---
+
+## `std::cout.write()` 
+
+바이트 단위 출력, 바이너리 데이터나 개행 없는 출력 가능, 길이를 직접 지정해야 함
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+    const char* str = "Hello, world!";
+    cout.write(str, 13);
+}
+```
+
+
 
 ---
 
@@ -204,6 +234,26 @@ int main() {
 | **정렬 방향** | `%-5d` | `left`, `right` | `{:<5}`, `{:>5}` |
 | **불리언** | 없음 | `boolalpha` | `{}` |
 | **문자열** | `%s` | 그대로 출력 | `{}` |
+
+---
+
+## `Raw String Literal`
+문자열 내의 `\n`, `\t` 같은 **이스케이프 문자를 그대로 출력**하고 싶다면
+**Raw String Literal**을 사용
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+    cout << R"(Hello\nWorld\t!)" << endl;
+}
+```
+
+> 출력 결과
+> ```
+> Hello\nWorld\t!
+> ```
 
 ---
 
