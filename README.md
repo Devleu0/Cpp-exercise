@@ -9,9 +9,10 @@ C++를 공부하면서 제작한 자료들 입니다.
 - [OOP](./Learning_cpp/md/3.%20C++%20OOP%20핵심.md)  
 - [STL, 파일 입출력](./Learning_cpp/md/4.%20C++%20STL_파일%20입출력%20.md)  
 - [심화 학습](./Learning_cpp/md/5.%20C++%20심화%20학습.md)  
-- [PS. C++ 공략](./Learning_cpp/md/PS.%20C++%20공략.md)  
+- [PS. C++ 알고리즘 공략](./Learning_cpp/md/PS.%20C++%20알고리즘%20공략.md)  
 - [PS. C++ 문자열 다루기](./Learning_cpp/md/PS.%20C++%20문자열%20다루기.md)
-- [PS. C++ 배열과 벡터](./Learning_cpp/md/PS.%20C++%20배열과%20벡터.md)  
+- [PS. C++ 배열과 벡터](./Learning_cpp/md/PS.%20C++%20배열과%20벡터.md)
+- [PS. C++ 출력 형식](./Learning_cpp/md/PS.%20C++%20출력%20형식.md)  
 ---
 
 ## [C++ 기초](./Learning_cpp/md/1.%20C++%20기초.md)  
