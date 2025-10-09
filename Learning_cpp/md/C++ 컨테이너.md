@@ -33,6 +33,16 @@ deque<int> dq = {1, 2, 3};
 array<int, 3> arr = {1, 2, 3};
 string s = "Hello";
 ```
+### 제공되는 함수
+| 컨테이너   | 주요 특징     | 접근 관련 함수 | 삽입/삭제 관련 함수| 용량 관련 함수    | 기타 함수  |
+| ----------------------------------- | -------------------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`vector<T>`**                     | 동적 배열, 인덱스 접근 `O(1)`, 끝 삽입/삭제 빠름 | `at()`, `operator[]`, `front()`, `back()`, `data()`            | `push_back()`, `pop_back()`, `insert()`, `erase()`, `emplace()`, `emplace_back()`, `clear()`                                                                                                                           | `size()`, `capacity()`, `empty()`, `resize()`, `reserve()`, `shrink_to_fit()` | `assign()`, `swap()`                                                                 |
+| **`deque<T>`**                      | 양쪽 끝 삽입/삭제 `O(1)`, 인덱스 접근 가능     | `at()`, `operator[]`, `front()`, `back()`                      | `push_front()`, `push_back()`, `pop_front()`, `pop_back()`, `insert()`, `erase()`, `emplace_front()`, `emplace_back()`, `clear()`                                                                                      | `size()`, `empty()`, `resize()`, `shrink_to_fit()`                            | `assign()`, `swap()`     |
+| **`list<T>`**                       | 이중 연결 리스트, 임의 접근 불가              | `front()`, `back()`                                            | `push_front()`, `push_back()`, `pop_front()`, `pop_back()`, `insert()`, `erase()`, `emplace_front()`, `emplace_back()`, `remove()`, `remove_if()`, `unique()`, `splice()`, `merge()`, `sort()`, `reverse()`, `clear()` | `size()`, `empty()` | `assign()`, `swap()` |
+| **`forward_list<T>`**               | 단일 연결 리스트, 메모리 절약                | `front()`                                                      | `push_front()`, `pop_front()`, `insert_after()`, `erase_after()`, `emplace_front()`, `remove()`, `remove_if()`, `unique()`, `merge()`, `sort()`, `reverse()`, `clear()`                            | `empty()` (※ `size()` 없음)  | `assign()`, `swap()`  |
+| **`array<T, N>`**                   | 정적 배열, 크기 고정, STL 알고리즘 사용 가능     | `at()`, `operator[]`, `front()`, `back()`, `data()`            | (삽입/삭제 불가, 크기 고정) | `size()`, `max_size()`, `empty()`    | `fill()`, `swap()`        |
+| **`string`** (`basic_string<char>`) | 문자 전용 컨테이너, `vector<char>`와 유사   | `at()`, `operator[]`, `front()`, `back()`, `data()`, `c_str()` | `append()`, `push_back()`, `pop_back()`, `insert()`, `erase()`, `replace()`, `clear()`                                                                                                                                 | `size()`, `capacity()`, `resize()`, `reserve()`, `shrink_to_fit()`, `empty()` | `substr()`, `find()`, `rfind()`, `compare()`, `starts_with()`, `ends_with()`, `find_first_of()`, `find_last_of()`, `find_first_not_of()`, `find_last_not_of()`, `copy()`, `swap()` |
+
 
 ---
 
@@ -58,6 +68,14 @@ map<string, int> m;
 m["apple"] = 3;
 m["banana"] = 5;
 ```
+
+| 컨테이너                   | 주요 특징                 | 원소 접근 관련 함수                                                                          | 삽입/삭제 관련 함수                                             | 탐색 관련 함수                                                               | 용량 관련 함수                          | 기타 함수                        |
+| ---------------------- | --------------------- | ------------------------------------------------------------------------------------ | ------------------------------------------------------- | ---------------------------------------------------------------------- | --------------------------------- | ---------------------------- |
+| **`set<T>`**           | 정렬된 유일 원소 저장 (`<` 기준) | `begin()`, `end()`, `rbegin()`, `rend()`, `cbegin()`, `cend()`                       | `insert()`, `emplace()`, `erase()`, `clear()`, `swap()` | `find()`, `count()`, `lower_bound()`, `upper_bound()`, `equal_range()` | `size()`, `empty()`, `max_size()` | `key_comp()`, `value_comp()` |
+| **`multiset<T>`**      | 정렬된 중복 원소 저장          | `begin()`, `end()`, `rbegin()`, `rend()`, `cbegin()`, `cend()`                       | `insert()`, `emplace()`, `erase()`, `clear()`, `swap()` | `find()`, `count()`, `lower_bound()`, `upper_bound()`, `equal_range()` | `size()`, `empty()`, `max_size()` | `key_comp()`, `value_comp()` |
+| **`map<Key, T>`**      | `Key`는 유일, 정렬된 키-값 쌍  | `begin()`, `end()`, `rbegin()`, `rend()`, `cbegin()`, `cend()`, `at()`, `operator[]` | `insert()`, `emplace()`, `erase()`, `clear()`, `swap()` | `find()`, `count()`, `lower_bound()`, `upper_bound()`, `equal_range()` | `size()`, `empty()`, `max_size()` | `key_comp()`, `value_comp()` |
+| **`multimap<Key, T>`** | 중복된 키 허용, 정렬된 키-값 쌍   | `begin()`, `end()`, `rbegin()`, `rend()`, `cbegin()`, `cend()`                       | `insert()`, `emplace()`, `erase()`, `clear()`, `swap()` | `find()`, `count()`, `lower_bound()`, `upper_bound()`, `equal_range()` | `size()`, `empty()`, `max_size()` | `key_comp()`, `value_comp()` |
+
 
 ---
 
