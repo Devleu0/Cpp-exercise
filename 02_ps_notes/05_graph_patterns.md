@@ -30,6 +30,7 @@ for (int i = 0; i < m; ++i) {
 
 가중치 없는 그래프의 **최단 거리**.
 
+<!-- check:compile -->
 ```cpp
 std::vector<int> bfs(const std::vector<std::vector<int>>& graph, int start) {
     std::vector<int> dist(graph.size(), -1);   // -1 = 미방문
@@ -51,6 +52,7 @@ std::vector<int> bfs(const std::vector<std::vector<int>>& graph, int start) {
 
 ## 2. DFS (깊이 우선 탐색)
 
+<!-- check:compile -->
 ```cpp
 void dfs(const std::vector<std::vector<int>>& graph, int cur, std::vector<bool>& visited) {
     visited[cur] = true;
@@ -79,6 +81,7 @@ void dfs_iterative(const std::vector<std::vector<int>>& graph, int start, std::v
 
 미로 최단 거리, 섬 개수 등. 예제: [connected_components.cpp](../03_algorithms/graph/connected_components.cpp)
 
+<!-- check:compile -->
 ```cpp
 int grid_bfs(const std::vector<std::string>& board, int start_row, int start_col) {
     const int n = board.size(), m = board[0].size();
@@ -109,6 +112,7 @@ int grid_bfs(const std::vector<std::string>& board, int start_row, int start_col
 
 음수 가중치가 없는 그래프. 예제: [dijkstra.cpp](../03_algorithms/graph/dijkstra.cpp)
 
+<!-- check:compile -->
 ```cpp
 const long long INF = 1e18;
 
@@ -140,6 +144,7 @@ std::vector<long long> dijkstra(const std::vector<std::vector<std::pair<int, int
 
 예제: [mst.cpp](../03_algorithms/graph/mst.cpp), Union-Find: [disjoint_set.cpp](../03_algorithms/data_structure/disjoint_set.cpp)
 
+<!-- check:compile -->
 ```cpp
 std::vector<int> parent;
 
@@ -169,6 +174,7 @@ long long kruskal(int n, std::vector<std::tuple<int, int, int>> edges) {   // (�
 
 선후 관계가 있는 작업 순서. 예제: [topological_sort.cpp](../03_algorithms/graph/topological_sort.cpp)
 
+<!-- check:compile -->
 ```cpp
 std::vector<int> topo_sort(const std::vector<std::vector<int>>& graph, int n) {
     std::vector<int> indegree(n + 1, 0), order;

@@ -5,6 +5,7 @@
 
 ## 1. 입력 패턴 모음
 
+<!-- check:compile -->
 ```cpp
 #include <iostream>
 #include <string>
@@ -193,6 +194,7 @@ int arr[100]; std::fill(arr, arr + 100, -1);     // memset 은 0, -1 외의 값�
 
 ## 6. 코테 템플릿
 
+<!-- check:compile -->
 ```cpp
 #include <algorithm>
 #include <iostream>

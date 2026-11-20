@@ -27,3 +27,11 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build (Windows 전용 파일은 자동 제외)
         run: bash scripts/build_projects.sh
+
+  notes:
+    name: notes code blocks (g++)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile marked code blocks (<!-- check:compile -->)
+        run: python3 scripts/check_notes.py
