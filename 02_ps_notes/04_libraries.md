@@ -1,4 +1,33 @@
-# C++ Problem Solving 공략
+# C++ STL 라이브러리 (코테용)
+
+> 코테에서 자주 쓰는 STL 컨테이너 · 알고리즘 · 헤더 정리. Python 의 `collections` / `heapq` / `bisect` / `itertools` 가 C++ 에서 무엇인지 찾을 때 보는 노트.
+> Python 버전: [Warming-Up-for-Python/02_ps_notes/04_libraries.md](https://github.com/Devleu0/Warming-Up-for-Python/blob/main/02_ps_notes/04_libraries.md)
+
+## 한눈에 보기 (Python → C++)
+
+| Python | C++ | 헤더 | 비고 |
+| --- | --- | --- | --- |
+| `list` | `std::vector` | `<vector>` | |
+| `collections.deque` | `std::deque` | `<deque>` | `push_front` / `pop_front` O(1) |
+| `list` 를 스택으로 | `std::stack` | `<stack>` | `top()` 후 `pop()` (pop 은 반환값 없음) |
+| `deque` 를 큐로 | `std::queue` | `<queue>` | `front()` 후 `pop()` |
+| `heapq` (최소 힙) | `std::priority_queue<T, std::vector<T>, std::greater<T>>` | `<queue>` | 기본 `priority_queue` 는 **최대 힙** |
+| `set` | `std::unordered_set` / `std::set` | `<unordered_set>` / `<set>` | `set` 은 정렬 유지 + `lower_bound` 가능 |
+| `dict` | `std::unordered_map` / `std::map` | `<unordered_map>` / `<map>` | `map` 은 키 정렬 순회 |
+| `collections.Counter` | `std::map<T, int>` + `++cnt[x]` | `<map>` | 없는 키는 0 으로 자동 생성 |
+| `collections.defaultdict(list)` | `std::map<K, std::vector<V>>` | `<map>` | `m[k].push_back(v)` |
+| 정렬된 리스트 + `bisect.insort` | `std::multiset` | `<set>` | 중복 허용 정렬 집합 |
+| `bisect_left` / `bisect_right` | `std::lower_bound` / `std::upper_bound` | `<algorithm>` | [lower_upper_bound.cpp](../03_algorithms/binary_search/lower_upper_bound.cpp) |
+| `itertools.permutations` | `std::next_permutation` | `<algorithm>` | 먼저 정렬해야 모든 순열 |
+| `itertools.combinations` | 비트마스크 / `next_permutation` + bool 배열 | | |
+| `itertools.accumulate` | `std::partial_sum` | `<numeric>` | |
+| `functools.lru_cache` | 메모이제이션 배열 / `std::map` | | |
+| `functools.cmp_to_key` | `std::sort` 의 비교 람다 | `<algorithm>` | C++ 는 원래 비교 함수 방식 |
+| `math.gcd`, `math.lcm` | `std::gcd`, `std::lcm` | `<numeric>` | C++17 |
+| `math.inf` | `std::numeric_limits<T>::max()` | `<limits>` | 또는 `1e9`, `1e18` |
+| `tuple` | `std::pair` / `std::tuple` | `<utility>` / `<tuple>` | 사전식 비교 지원 |
+
+---
 
 ## 1. 주요 STL 컨테이너
 
@@ -53,131 +82,15 @@
 
 ---
 
-## 4. 그래프 관련 STL 패턴
+## 4. 그래프
 
-| 용도              | 자료구조                                                              |  코드                                                                    |
-| --------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| 인접 리스트          | `vector<vector<int>>`                                             | `vector<vector<int>> graph(n+1); graph[u].push_back(v);`                 |
-| 방문 체크           | `vector<bool>`                                                    | `vector<bool> visited(n+1, false);`                                      |
-| 큐 BFS           | `queue<int>`                                                      | `queue<int> q; q.push(start);`                                           |
-| DFS 재귀          | `vector<int>` + 재귀                                                | `dfs(node) { for (auto nxt : graph[node]) if(!visited[nxt]) dfs(nxt); }` |
-| 가중치 그래프         | `vector<vector<pair<int,int>>>`                                   | `graph[u].push_back({v, w});`                                            |
-| 최단경로 (Dijkstra) | `priority_queue<pair<int,int>, vector<pair<int,int>>, greater<>>` | `pq.push({dist, node});`                                                 |
-| 간선 리스트          | `vector<tuple<int,int,int>>`                                      | Kruskal: `(가중치, u, v)`                                                   |
-| BFS 레벨          | `queue<pair<int,int>>`                                            | `q.push({node, depth});`                                                 |
-| 방향 그래프          | `graph[u].push_back(v);`                                          | 단방향만 연결                                                                  |
-| 무방향 그래프         | `graph[u].push_back(v); graph[v].push_back(u);`                   | 양방향 연결                                                                   |
-
----
-
-<details> <summary>`1: BFS (너비 우선 탐색)`</summary>
-
-```cpp
-#include <bits/stdc++.h>
-using namespace std;
-
-vector<vector<int>> graph;
-vector<bool> visited;
-
-void bfs(int start) {
-    queue<int> q;
-    q.push(start);
-    visited[start] = true;
-
-    while (!q.empty()) {
-        int cur = q.front(); q.pop();
-        for (int nxt : graph[cur]) {
-            if (!visited[nxt]) {
-                visited[nxt] = true;
-                q.push(nxt);
-            }
-        }
-    }
-}
-```
-</details>
-
-<details> <summary>`2: DFS (깊이 우선 탐색)`</summary>
-
-```cpp
-void dfs(int cur) {
-    visited[cur] = true;
-    for (int nxt : graph[cur]) {
-        if (!visited[nxt])
-            dfs(nxt);
-    }
-}
-```
-</details> 
-
-<details><summary> `3: Dijkstra (최단 경로)`</summary>
-
-```cpp
-#include <bits/stdc++.h>
-using namespace std;
-
-const int INF = 1e9;
-vector<vector<pair<int,int>>> graph;
-vector<int> dist;
-
-void dijkstra(int start) {
-    priority_queue<pair<int,int>, vector<pair<int,int>>, greater<>> pq;
-    dist[start] = 0;
-    pq.push({0, start});
-
-    while (!pq.empty()) {
-        auto [cost, cur] = pq.top(); pq.pop();
-        if (cost > dist[cur]) continue;
-
-        for (auto [next, weight] : graph[cur]) {
-            int newCost = cost + weight;
-            if (newCost < dist[next]) {
-                dist[next] = newCost;
-                pq.push({newCost, next});
-            }
-        }
-    }
-}
-```
-</details>
-
-<details><summary>`4: Kruskal (MST)`</summary>
-
-```cpp
-struct Edge { int w, u, v; };
-vector<Edge> edges;
-vector<int> parent;
-
-int find(int x) {
-    return parent[x] == x ? x : parent[x] = find(parent[x]);
-}
-
-void unite(int a, int b) {
-    a = find(a); b = find(b);
-    if (a != b) parent[b] = a;
-}
-
-int kruskal(int n) {
-    sort(edges.begin(), edges.end(), [](auto &a, auto &b){ return a.w < b.w; });
-    parent.resize(n+1);
-    iota(parent.begin(), parent.end(), 0);
-
-    int total = 0;
-    for (auto &e : edges) {
-        if (find(e.u) != find(e.v)) {
-            unite(e.u, e.v);
-            total += e.w;
-        }
-    }
-    return total;
-}
-```
-
-</details>
+그래프 표현 방법과 BFS / DFS / 격자 BFS / Dijkstra / Kruskal / 위상 정렬 템플릿은 [그래프 패턴](./05_graph_patterns.md) 노트로 옮겼습니다.
 
 ---
 
 ## 5. 자주 쓰는 조합
+
+> 우선순위 큐 · 이진 탐색 · 중복 제거처럼 한 줄로 끝나는 관용구.
 
 ### 1) 우선순위 큐 (최소 힙)
 
