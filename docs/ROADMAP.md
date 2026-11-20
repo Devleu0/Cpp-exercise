@@ -81,18 +81,18 @@ C++ 는 포인터·OOP·헤더 분리처럼 Python 에 없는 필수 주제가 �
 | 02_control_flow, 03_loop | `01_basics/01_syntax_and_control_flow.md` §4 |
 | 04_string | `01_basics/02_functions_arrays_pointers.md` §2, `02_ps_notes/03_strings.md` |
 | 05_list_dict_set_tuple | `01_basics/06_array_vector_init.md`, `01_basics/07_containers.md` |
-| 06_built_in_functions | `02_ps_notes/02_stl_algorithms.md` (Phase 2) |
+| 06_built_in_functions | `02_ps_notes/02_stl_algorithms.md` |
 
 ### 3-3. 02_ps_notes
 
 | # | Python | C++ | 작업 |
 | --- | --- | --- | --- |
-| 1 | `01_io_and_pitfalls.md` | `01_io_and_pitfalls.md` | 신규 작성 (Phase 2) |
-| 2 | `02_builtins.md` | `02_stl_algorithms.md` | 신규 작성 — `<algorithm>`·`<numeric>`·정수 연산 함정 (Phase 2) |
-| 3 | `03_strings.md` | `03_strings.md` | 기존 노트 이전 |
-| 4 | `04_libraries.md` | `04_libraries.md` | 기존 "알고리즘 공략" 이전 → Phase 2 에서 그래프 부분 분리 · Python 대응표 추가 |
-| 5 | `05_graph_patterns.md` | `05_graph_patterns.md` | 신규 (04 에서 그래프 템플릿 분리 + 격자 BFS) (Phase 2) |
-| 6 | `06_naming.md` | `06_naming.md` | C++ 예제로 포팅 (Phase 2) |
+| 1 | `01_io_and_pitfalls.md` | `01_io_and_pitfalls.md` | ✅ 신규 — C++ 고유 함정(오버플로, size_t, UB, map[]) 중심으로 재구성 |
+| 2 | `02_builtins.md` | `02_stl_algorithms.md` | ✅ 신규 — Python 내장함수 → `<algorithm>`·`<numeric>` 대응표 + 같은 12개 절 구성 |
+| 3 | `03_strings.md` | `03_strings.md` | 기존 노트 이전 (내용 유지) |
+| 4 | `04_libraries.md` | `04_libraries.md` | ✅ 머리말 + Python 라이브러리 → STL 대응표 추가, 그래프 템플릿은 05 로 이관 |
+| 5 | `05_graph_patterns.md` | `05_graph_patterns.md` | ✅ 신규 — 04 의 그래프 템플릿을 모듈화(전역 → 인자) + 격자 BFS · 반복 DFS · 위상 정렬 · 상황별 선택표 |
+| 6 | `06_naming.md` | `06_naming.md` | ✅ C++ 예제로 포팅 + C++ 에서 피할 이름(`next`, `count`, `y1`) 추가 |
 | 7 | — | `07_output_format.md` | C++ 전용 (기존 노트 이전) |
 | 8 | — | `08_fast_io_by_language.md` | 기존 노트 이전 |
 
@@ -120,7 +120,7 @@ Python 의 `03_algorithms/<category>/<name>.py` → C++ 의 `03_algorithms/<cate
 | --- | --- | --- | --- |
 | 0 | 기획 문서, 컨벤션, 디렉토리 재구성 (파일 이동만, 내용 변경 없음), README 개편 | `refactor/restructure-layout` | ✅ PR #1 |
 | 1 | 테스트 스크립트 · CI · `03_algorithms` 33개 C++ 포팅 + testdata | `feat/algorithms-cpp` | ✅ PR #2 (g++ 15 / clang++ 22 에서 33/33 통과) |
-| 2 | `02_ps_notes` 신규 노트 4개 + `04_libraries` 정리 + README "이럴 땐 여기" | `docs/ps-notes` | ⏳ |
+| 2 | `02_ps_notes` 신규 노트 4개 + `04_libraries` 정리 + README "이럴 땐 여기" | `docs/ps-notes` | ✅ PR #3 |
 | 3 | 후속 정리 (아래 백로그) | — | 📋 계획 |
 
 PR 은 **스택 방식**으로 올린다 (Phase N 의 PR base = Phase N-1 브랜치). 앞 PR 이 머지되면 GitHub 이 다음 PR 의 base 를 `main` 으로 자동 변경한다 (머지 시 브랜치 삭제 기준). **머지 순서: Phase 0 → 1 → 2.**
@@ -133,6 +133,9 @@ PR 은 **스택 방식**으로 올린다 (Phase N 의 PR base = Phase N-1 브랜
 - [ ] `04_projects` 도 CI 빌드 대상에 포함 (이식성 작업 후)
 - [ ] 알고리즘 추가 후보: 세그먼트 트리, 플로이드–워셜, 벨만–포드, 에라토스테네스의 체 (Python 레포에도 추가되면 함께)
 - [ ] `.clang-format` 도입 여부 결정 (현재는 `.editorconfig` 로 들여쓰기만 통일)
+- [ ] `02_ps_notes/03_strings.md`: 절 번호가 20 → 24 로 건너뜀, Python 노트와 절 대응 점검
+- [ ] 노트 코드 블록 컴파일 검사를 CI 에 추가할지 검토 (Phase 2 에서는 05 의 템플릿 전부와 01 의 템플릿을 수동 검사)
+- [ ] Python 레포 쪽 버그 제보: `is_prime(1) == True`
 
 ---
 
@@ -152,3 +155,5 @@ PR 은 **스택 방식**으로 올린다 (Phase N 의 PR base = Phase N-1 브랜
 | D10 | 알고리즘은 전역 변수 대신 함수 인자 또는 클래스로 상태를 갖는다 | Python 버전은 일부 전역 변수(`graph`, `distance`)를 쓴다. 다른 문제에 복사해 쓸 때 충돌이 없도록 모듈화 |
 | D11 | 거리·합·곱은 `long long` | Python int 는 오버플로가 없지만 C++ `int` 는 약 21억에서 넘침 |
 | D12 | `.gitignore` 에 `!03_algorithms/**/testdata/*.out` 예외 추가 | 기존 C++ 템플릿의 `*.out`(실행 파일) 규칙이 테스트 기대값 파일까지 무시해, 로컬에서 `git add` 해도 커밋되지 않는 문제가 있었음 |
+| D13 | 노트 코드도 `std::` 를 붙이고, 대회용 `bits/stdc++.h` + `using namespace std` 는 템플릿 끝에 주의점과 함께 소개 | 컨벤션(D4) 일관성 유지 + 실제 코테 환경의 관습도 알려주기 위함 |
+| D14 | 기존 노트 03 · 07 · 08 본문은 이번에 손대지 않음 | 내용이 이미 충실하고, 서식·번호 정리는 Phase 3 백로그에서 별도 PR 로 |
