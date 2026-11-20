@@ -30,14 +30,26 @@ C++ 를 공부하면서 만든 학습 자료입니다. **C++ 기초 → 코테�
 
 ## 02. PS Notes (코테 워밍업)
 
+다른 언어(특히 Python)에 익숙한 개발자가 코테 전에 훑어보는 노트입니다. 시간이 없으면 1 → 2 → 4 순서로.
+
 | # | 노트 | 내용 |
 | --- | --- | --- |
+| 1 | [입출력과 함정](./02_ps_notes/01_io_and_pitfalls.md) | 빠른 입출력, TLE 원인, 오버플로·UB 등 흔한 버그, 코테 템플릿 |
+| 2 | [STL 알고리즘 치트시트](./02_ps_notes/02_stl_algorithms.md) | Python 내장함수 ↔ `<algorithm>`/`<numeric>`, 정렬 비교 함수, 정수 연산 함정 |
 | 3 | [문자열 다루기](./02_ps_notes/03_strings.md) | 찾기 · 자르기 · 치환 · 변환 · 역방향 접근 |
-| 4 | [라이브러리](./02_ps_notes/04_libraries.md) | STL 컨테이너 · `<algorithm>` · 그래프 템플릿 |
+| 4 | [라이브러리](./02_ps_notes/04_libraries.md) | Python 라이브러리 ↔ STL 대응표, 컨테이너, 자주 쓰는 조합, 상황별 추천 |
+| 5 | [그래프 패턴](./02_ps_notes/05_graph_patterns.md) | BFS / DFS / 격자 BFS / 다익스트라 / 크루스칼 / 위상 정렬 템플릿 |
+| 6 | [인덱스 · 네이밍](./02_ps_notes/06_naming.md) | 루프 변수 이름 짓는 법, C++ 에서 피해야 할 이름 |
 | 7 | [출력 형식](./02_ps_notes/07_output_format.md) | `printf` · `iomanip` · `std::format` |
 | 8 | [언어별 빠른 입출력](./02_ps_notes/08_fast_io_by_language.md) | C/C++/Java/Python/Rust 빠른 I/O |
 
-> 1 · 2 · 5 · 6 번 노트(입출력과 함정, STL 알고리즘, 그래프 패턴, 네이밍)는 [ROADMAP Phase 2](./docs/ROADMAP.md#4-진행-상태) 에서 추가됩니다.
+**이럴 땐 여기**
+* 입력이 많아서 느리다 → [입출력과 함정 §1, §3](./02_ps_notes/01_io_and_pitfalls.md)
+* 답이 이상하게 음수가 나온다 / 큰 수에서만 틀린다 → [입출력과 함정 §4-1 오버플로](./02_ps_notes/01_io_and_pitfalls.md#4-1-정수-오버플로)
+* 음수 나눗셈 / 나머지가 Python 과 다르다 → [STL 알고리즘 §6](./02_ps_notes/02_stl_algorithms.md#6-정수-연산-함정)
+* 최소 힙 / lower_bound 가 필요하다 → [라이브러리 · 한눈에 보기](./02_ps_notes/04_libraries.md#한눈에-보기-python--c)
+* Python 의 무엇이 C++ 의 무엇인지 → [STL 알고리즘 · 한눈에 보기](./02_ps_notes/02_stl_algorithms.md#한눈에-보기-python--c), [라이브러리 · 한눈에 보기](./02_ps_notes/04_libraries.md#한눈에-보기-python--c)
+* Segmentation fault 가 난다 → [입출력과 함정 §4-3 ~ §4-4, §4-9](./02_ps_notes/01_io_and_pitfalls.md#4-흔한-버그-모음)
 
 ## 03. Algorithms
 
