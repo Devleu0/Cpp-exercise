@@ -118,8 +118,8 @@ Python 의 `03_algorithms/<category>/<name>.py` → C++ 의 `03_algorithms/<cate
 
 | Phase | 내용 | 브랜치 | 상태 |
 | --- | --- | --- | --- |
-| 0 | 기획 문서, 컨벤션, 디렉토리 재구성 (파일 이동만, 내용 변경 없음), README 개편 | `refactor/restructure-layout` | ✅ PR 작성 |
-| 1 | 테스트 스크립트 · CI · `03_algorithms` 33개 C++ 포팅 + testdata | `feat/algorithms-cpp` | ⏳ |
+| 0 | 기획 문서, 컨벤션, 디렉토리 재구성 (파일 이동만, 내용 변경 없음), README 개편 | `refactor/restructure-layout` | ✅ PR #1 |
+| 1 | 테스트 스크립트 · CI · `03_algorithms` 33개 C++ 포팅 + testdata | `feat/algorithms-cpp` | ✅ PR #2 (g++ 15 / clang++ 22 에서 33/33 통과) |
 | 2 | `02_ps_notes` 신규 노트 4개 + `04_libraries` 정리 + README "이럴 땐 여기" | `docs/ps-notes` | ⏳ |
 | 3 | 후속 정리 (아래 백로그) | — | 📋 계획 |
 
@@ -148,3 +148,7 @@ PR 은 **스택 방식**으로 올린다 (Phase N 의 PR base = Phase N-1 브랜
 | D6 | 테스트는 `testdata/<name>.out` 과 표준 출력 비교 (+ 코드 내 `assert`) | 별도 테스트 프레임워크 없이 "실행 결과 = 문서화된 예제 출력" 을 보장. 입력이 필요하면 `<name>.in` 추가 |
 | D7 | Python 쪽 버그는 C++ 포팅 시 바로잡고 파일 주석에 기록 | 예: `is_prime(1)` 이 `True` 를 반환하는 문제 |
 | D8 | `bisect_usage` → `lower_upper_bound` 로 이름 변경 | C++ 에는 `bisect` 가 없고 대응 함수가 `lower_bound`/`upper_bound` |
+| D9 | Python 의 `None` 반환은 `-1` (인덱스) 또는 `std::optional` (값) 으로 대응 | 인덱스는 PS 관례상 `-1`, 값이 없을 수 있는 결과(모듈러 역원)는 `std::optional` |
+| D10 | 알고리즘은 전역 변수 대신 함수 인자 또는 클래스로 상태를 갖는다 | Python 버전은 일부 전역 변수(`graph`, `distance`)를 쓴다. 다른 문제에 복사해 쓸 때 충돌이 없도록 모듈화 |
+| D11 | 거리·합·곱은 `long long` | Python int 는 오버플로가 없지만 C++ `int` 는 약 21억에서 넘침 |
+| D12 | `.gitignore` 에 `!03_algorithms/**/testdata/*.out` 예외 추가 | 기존 C++ 템플릿의 `*.out`(실행 파일) 규칙이 테스트 기대값 파일까지 무시해, 로컬에서 `git add` 해도 커밋되지 않는 문제가 있었음 |

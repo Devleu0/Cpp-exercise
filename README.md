@@ -41,7 +41,58 @@ C++ 를 공부하면서 만든 학습 자료입니다. **C++ 기초 → 코테�
 
 ## 03. Algorithms
 
-> [ROADMAP Phase 1](./docs/ROADMAP.md#4-진행-상태) 에서 Python 레포의 알고리즘 33개를 C++ 로 포팅합니다.
+모든 파일은 단독 컴파일·실행됩니다 (C++17, 표준 라이브러리만 사용).
+
+```bash
+g++ -std=c++17 -O2 03_algorithms/graph/dijkstra.cpp -o dijkstra
+./dijkstra < 03_algorithms/graph/testdata/dijkstra.in
+
+./scripts/run_tests.sh          # 전체 빌드 + 예상 출력(testdata/*.out) 비교
+```
+
+#### 정렬 `sorting/`
+* [선택 정렬](./03_algorithms/sorting/selection_sort.cpp) · [삽입 정렬](./03_algorithms/sorting/insertion_sort.cpp) · [퀵 정렬 (+퀵 셀렉트)](./03_algorithms/sorting/quick_sort.cpp) · [계수 정렬](./03_algorithms/sorting/counting_sort.cpp)
+* [`std::sort` / `std::stable_sort` 사용법](./03_algorithms/sorting/sort_builtin.cpp)
+
+#### 이진 탐색 `binary_search/`
+* [이진 탐색](./03_algorithms/binary_search/binary_search.cpp)
+* [`lower_bound` / `upper_bound` 사용법](./03_algorithms/binary_search/lower_upper_bound.cpp) — 이상/이하/초과/미만 위치 찾기 (Python `bisect_usage`)
+* [정렬된 배열에서 값이 [left, right] 인 원소 개수](./03_algorithms/binary_search/count_in_range.cpp)
+
+#### 그래프 `graph/`
+* [DFS & BFS](./03_algorithms/graph/dfs_bfs.cpp)
+* [연결 요소 개수 (격자 BFS)](./03_algorithms/graph/connected_components.cpp)
+* [다익스트라](./03_algorithms/graph/dijkstra.cpp)
+* [최소 신장 트리 (Kruskal)](./03_algorithms/graph/mst.cpp)
+* [위상 정렬](./03_algorithms/graph/topological_sort.cpp)
+* [LCA (Binary Lifting)](./03_algorithms/graph/lca.cpp)
+* [SCC (Tarjan)](./03_algorithms/graph/scc_tarjan.cpp)
+* [단절점](./03_algorithms/graph/articulation_point.cpp)
+
+#### 동적 계획법 `dp/`
+* [LIS (O(N log N))](./03_algorithms/dp/lis.cpp)
+* [비트마스크 TSP](./03_algorithms/dp/bitmask_tsp.cpp)
+
+#### 문자열 `string/`
+* [KMP](./03_algorithms/string/kmp.cpp)
+
+#### 자료구조 `data_structure/`
+* [Union-Find (Disjoint Set)](./03_algorithms/data_structure/disjoint_set.cpp)
+* [좌표 압축](./03_algorithms/data_structure/coordinate_compression.cpp)
+* [펜윅 트리 (BIT)](./03_algorithms/data_structure/fenwick_tree.cpp) — 구간 합 + 역전수 예제
+
+#### 수학 `math/`
+* [최대공약수 GCD](./03_algorithms/math/gcd.cpp) · [최소공배수 LCM](./03_algorithms/math/lcm.cpp) · [확장 유클리드](./03_algorithms/math/extended_euclidean.cpp)
+* [소수 판정](./03_algorithms/math/is_prime.cpp) · [약수 구하기](./03_algorithms/math/divisors.cpp) · [소인수분해](./03_algorithms/math/prime_factorization.cpp)
+* [뤼카 정리 (nCr mod p)](./03_algorithms/math/lucas_theorem.cpp)
+
+#### 기하 `geometry/`
+* [1차원 두 선분의 교점 개수](./03_algorithms/geometry/segment_intersection_1d.cpp)
+
+#### 기법 `techniques/`
+* [투 포인터 — 합이 M인 구간 개수](./03_algorithms/techniques/two_pointers.cpp)
+* [누적 합](./03_algorithms/techniques/prefix_sum.cpp)
+* [2차원 배열 90도 회전](./03_algorithms/techniques/rotate_matrix.cpp)
 
 ## 04. Projects
 
