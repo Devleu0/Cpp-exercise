@@ -38,7 +38,8 @@ Cpp-exercise/
 │   └── <category>/testdata/<name>.in|.out
 ├── 04_projects/              # 콘솔 미니 프로젝트 (기존 예제 코드)
 ├── scripts/
-│   └── run_tests.sh          # 03_algorithms 전체 빌드 + 출력 비교
+│   ├── run_tests.sh          # 03_algorithms 전체 빌드 + 출력 비교
+│   └── build_projects.sh     # 04_projects 컴파일 확인 (Windows 전용 제외)
 └── .github/workflows/ci.yml  # g++ / clang++ 빌드 · 테스트
 ```
 
@@ -121,16 +122,17 @@ Python 의 `03_algorithms/<category>/<name>.py` → C++ 의 `03_algorithms/<cate
 | 0 | 기획 문서, 컨벤션, 디렉토리 재구성 (파일 이동만, 내용 변경 없음), README 개편 | `refactor/restructure-layout` | ✅ PR #1 |
 | 1 | 테스트 스크립트 · CI · `03_algorithms` 33개 C++ 포팅 + testdata | `feat/algorithms-cpp` | ✅ PR #2 (g++ 15 / clang++ 22 에서 33/33 통과) |
 | 2 | `02_ps_notes` 신규 노트 4개 + `04_libraries` 정리 + README "이럴 땐 여기" | `docs/ps-notes` | ✅ PR #3 |
-| 3 | 후속 정리 (아래 백로그) | — | 📋 계획 |
+| 3-1 | `04_projects` 빌드 정리: BOM 제거, 이식 가능한 프로젝트 CI 빌드 | `fix/projects-build` | ✅ PR #4 |
+| 3-x | 나머지 후속 정리 (아래 백로그) | — | 📋 계획 |
 
-PR 은 **스택 방식**으로 올린다 (Phase N 의 PR base = Phase N-1 브랜치). 앞 PR 이 머지되면 GitHub 이 다음 PR 의 base 를 `main` 으로 자동 변경한다 (머지 시 브랜치 삭제 기준). **머지 순서: Phase 0 → 1 → 2.**
+PR 은 **스택 방식**으로 올린다 (Phase N 의 PR base = Phase N-1 브랜치). 앞 PR 이 머지되면 GitHub 이 다음 PR 의 base 를 `main` 으로 자동 변경한다 (머지 시 브랜치 삭제 기준). **머지 순서: Phase 0 → 1 → 2 → 3-1.**
 
 ### Phase 3 백로그 (후속 작업 후보)
 
 - [ ] `01_basics` 노트 점검: Python 노트북 대비 빠진 주제(자료형 범위·형변환 표 등) 보강, 목차 앵커 정리
-- [ ] `04_projects` 이식성: `snake_game.cpp`, `text_dungeon_rpg.cpp` 는 `<windows.h>`/`<conio.h>` 의존 → 플랫폼 분기 또는 README 에 "Windows 전용" 명시. `cpp_learning.cpp` 는 C++20 `<format>` 필요
-- [ ] `text_dungeon_rpg.cpp` 4번째 줄 `#include <ctime>` 뒤에 BOM 문자(U+FEFF)가 섞여 있어 컴파일 실패 → 제거 필요
-- [ ] `04_projects` 도 CI 빌드 대상에 포함 (이식성 작업 후)
+- [x] `04_projects` 이식성: Windows 전용 2개는 README 표시만 하고 코드는 유지 (D15). `cpp_learning.cpp` 는 C++20 으로 빌드
+- [x] `text_dungeon_rpg.cpp` 4번째 줄 `#include <ctime>` 뒤에 BOM 문자(U+FEFF)가 섞여 있어 컴파일 실패 → 제거 필요
+- [x] `04_projects` 도 CI 빌드 대상에 포함 → `scripts/build_projects.sh` (Windows 전용 자동 제외)
 - [ ] 알고리즘 추가 후보: 세그먼트 트리, 플로이드–워셜, 벨만–포드, 에라토스테네스의 체 (Python 레포에도 추가되면 함께)
 - [ ] `.clang-format` 도입 여부 결정 (현재는 `.editorconfig` 로 들여쓰기만 통일)
 - [ ] `02_ps_notes/03_strings.md`: 절 번호가 20 → 24 로 건너뜀, Python 노트와 절 대응 점검
@@ -157,3 +159,5 @@ PR 은 **스택 방식**으로 올린다 (Phase N 의 PR base = Phase N-1 브랜
 | D12 | `.gitignore` 에 `!03_algorithms/**/testdata/*.out` 예외 추가 | 기존 C++ 템플릿의 `*.out`(실행 파일) 규칙이 테스트 기대값 파일까지 무시해, 로컬에서 `git add` 해도 커밋되지 않는 문제가 있었음 |
 | D13 | 노트 코드도 `std::` 를 붙이고, 대회용 `bits/stdc++.h` + `using namespace std` 는 템플릿 끝에 주의점과 함께 소개 | 컨벤션(D4) 일관성 유지 + 실제 코테 환경의 관습도 알려주기 위함 |
 | D14 | 기존 노트 03 · 07 · 08 본문은 이번에 손대지 않음 | 내용이 이미 충실하고, 서식·번호 정리는 Phase 3 백로그에서 별도 PR 로 |
+| D15 | Windows 전용 프로젝트(`snake_game`, `text_dungeon_rpg`)는 플랫폼 분기 없이 README 에 "Windows 전용" 표시만 | 학습용 예제라 원본 구조 유지가 우선. 대신 CI 는 `<windows.h>`/`<conio.h>` 포함 여부로 자동 제외해 목록 관리가 필요 없게 함 |
+| D16 | `04_projects` CI 는 컴파일만 (실행 X), `-std=c++20`, g++ 만 | 대화형 프로그램이라 입력 없이 실행 불가. `cpp_learning.cpp` 가 `<format>` 사용 |

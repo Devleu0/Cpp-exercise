@@ -108,6 +108,13 @@ g++ -std=c++17 -O2 03_algorithms/graph/dijkstra.cpp -o dijkstra
 
 ## 04. Projects
 
+입력을 받는 대화형 콘솔 프로그램입니다. Windows 전용 파일은 Visual Studio 등 Windows 환경에서 빌드하세요.
+
+```bash
+g++ -std=c++20 04_projects/hangman.cpp -o hangman && ./hangman
+./scripts/build_projects.sh      # Windows 전용을 제외한 전체 빌드 확인 (CI 에서도 실행)
+```
+
 | 파일 | 내용 | 비고 |
 | --- | --- | --- |
 | [cpp_learning.cpp](./04_projects/cpp_learning.cpp) | 문법 연습 스크래치 | C++20 (`<format>`) |
