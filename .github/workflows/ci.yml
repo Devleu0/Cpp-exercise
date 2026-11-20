@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  algorithms:
+    name: 03_algorithms (${{ matrix.cxx }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        cxx: [g++, clang++]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build & test
+        env:
+          CXX: ${{ matrix.cxx }}
+        run: bash scripts/run_tests.sh
+
+  projects:
+    name: 04_projects build (g++)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build (Windows 전용 파일은 자동 제외)
+        run: bash scripts/build_projects.sh
+
+  notes:
+    name: notes code blocks (g++)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile marked code blocks (<!-- check:compile -->)
+        run: python3 scripts/check_notes.py

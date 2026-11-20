@@ -38,7 +38,9 @@ Cpp-exercise/
 │   └── <category>/testdata/<name>.in|.out
 ├── 04_projects/              # 콘솔 미니 프로젝트 (기존 예제 코드)
 ├── scripts/
-│   └── run_tests.sh          # 03_algorithms 전체 빌드 + 출력 비교
+│   ├── run_tests.sh          # 03_algorithms 전체 빌드 + 출력 비교
+│   ├── build_projects.sh     # 04_projects 컴파일 확인 (Windows 전용 제외)
+│   └── check_notes.py        # 노트의 마커 붙은 코드 블록 컴파일 확인
 └── .github/workflows/ci.yml  # g++ / clang++ 빌드 · 테스트
 ```
 
@@ -81,18 +83,18 @@ C++ 는 포인터·OOP·헤더 분리처럼 Python 에 없는 필수 주제가 �
 | 02_control_flow, 03_loop | `01_basics/01_syntax_and_control_flow.md` §4 |
 | 04_string | `01_basics/02_functions_arrays_pointers.md` §2, `02_ps_notes/03_strings.md` |
 | 05_list_dict_set_tuple | `01_basics/06_array_vector_init.md`, `01_basics/07_containers.md` |
-| 06_built_in_functions | `02_ps_notes/02_stl_algorithms.md` (Phase 2) |
+| 06_built_in_functions | `02_ps_notes/02_stl_algorithms.md` |
 
 ### 3-3. 02_ps_notes
 
 | # | Python | C++ | 작업 |
 | --- | --- | --- | --- |
-| 1 | `01_io_and_pitfalls.md` | `01_io_and_pitfalls.md` | 신규 작성 (Phase 2) |
-| 2 | `02_builtins.md` | `02_stl_algorithms.md` | 신규 작성 — `<algorithm>`·`<numeric>`·정수 연산 함정 (Phase 2) |
-| 3 | `03_strings.md` | `03_strings.md` | 기존 노트 이전 |
-| 4 | `04_libraries.md` | `04_libraries.md` | 기존 "알고리즘 공략" 이전 → Phase 2 에서 그래프 부분 분리 · Python 대응표 추가 |
-| 5 | `05_graph_patterns.md` | `05_graph_patterns.md` | 신규 (04 에서 그래프 템플릿 분리 + 격자 BFS) (Phase 2) |
-| 6 | `06_naming.md` | `06_naming.md` | C++ 예제로 포팅 (Phase 2) |
+| 1 | `01_io_and_pitfalls.md` | `01_io_and_pitfalls.md` | ✅ 신규 — C++ 고유 함정(오버플로, size_t, UB, map[]) 중심으로 재구성 |
+| 2 | `02_builtins.md` | `02_stl_algorithms.md` | ✅ 신규 — Python 내장함수 → `<algorithm>`·`<numeric>` 대응표 + 같은 12개 절 구성 |
+| 3 | `03_strings.md` | `03_strings.md` | 기존 노트 이전 (내용 유지) |
+| 4 | `04_libraries.md` | `04_libraries.md` | ✅ 머리말 + Python 라이브러리 → STL 대응표 추가, 그래프 템플릿은 05 로 이관 |
+| 5 | `05_graph_patterns.md` | `05_graph_patterns.md` | ✅ 신규 — 04 의 그래프 템플릿을 모듈화(전역 → 인자) + 격자 BFS · 반복 DFS · 위상 정렬 · 상황별 선택표 |
+| 6 | `06_naming.md` | `06_naming.md` | ✅ C++ 예제로 포팅 + C++ 에서 피할 이름(`next`, `count`, `y1`) 추가 |
 | 7 | — | `07_output_format.md` | C++ 전용 (기존 노트 이전) |
 | 8 | — | `08_fast_io_by_language.md` | 기존 노트 이전 |
 
@@ -118,21 +120,27 @@ Python 의 `03_algorithms/<category>/<name>.py` → C++ 의 `03_algorithms/<cate
 
 | Phase | 내용 | 브랜치 | 상태 |
 | --- | --- | --- | --- |
-| 0 | 기획 문서, 컨벤션, 디렉토리 재구성 (파일 이동만, 내용 변경 없음), README 개편 | `refactor/restructure-layout` | ✅ PR 작성 |
-| 1 | 테스트 스크립트 · CI · `03_algorithms` 33개 C++ 포팅 + testdata | `feat/algorithms-cpp` | ⏳ |
-| 2 | `02_ps_notes` 신규 노트 4개 + `04_libraries` 정리 + README "이럴 땐 여기" | `docs/ps-notes` | ⏳ |
-| 3 | 후속 정리 (아래 백로그) | — | 📋 계획 |
+| 0 | 기획 문서, 컨벤션, 디렉토리 재구성 (파일 이동만, 내용 변경 없음), README 개편 | `refactor/restructure-layout` | ✅ PR #1 |
+| 1 | 테스트 스크립트 · CI · `03_algorithms` 33개 C++ 포팅 + testdata | `feat/algorithms-cpp` | ✅ PR #2 (g++ 15 / clang++ 22 에서 33/33 통과) |
+| 2 | `02_ps_notes` 신규 노트 4개 + `04_libraries` 정리 + README "이럴 땐 여기" | `docs/ps-notes` | ✅ PR #3 |
+| 3-1 | `04_projects` 빌드 정리: BOM 제거, 이식 가능한 프로젝트 CI 빌드 | `fix/projects-build` | ✅ PR #4 |
+| 3-2 | 노트 코드 블록 컴파일 검사 (`<!-- check:compile -->` 마커 + CI) | `ci/check-notes` | ✅ PR #5 |
+| 3-x | 나머지 후속 정리 (아래 백로그) | — | 📋 계획 |
 
-PR 은 **스택 방식**으로 올린다 (Phase N 의 PR base = Phase N-1 브랜치). 앞 PR 이 머지되면 GitHub 이 다음 PR 의 base 를 `main` 으로 자동 변경한다 (머지 시 브랜치 삭제 기준). **머지 순서: Phase 0 → 1 → 2.**
+PR 은 **스택 방식**으로 올린다 (Phase N 의 PR base = Phase N-1 브랜치). 앞 PR 이 머지되면 GitHub 이 다음 PR 의 base 를 `main` 으로 자동 변경한다 (머지 시 브랜치 삭제 기준). **머지 순서: Phase 0 → 1 → 2 → 3-1 → 3-2.**
 
 ### Phase 3 백로그 (후속 작업 후보)
 
 - [ ] `01_basics` 노트 점검: Python 노트북 대비 빠진 주제(자료형 범위·형변환 표 등) 보강, 목차 앵커 정리
-- [ ] `04_projects` 이식성: `snake_game.cpp`, `text_dungeon_rpg.cpp` 는 `<windows.h>`/`<conio.h>` 의존 → 플랫폼 분기 또는 README 에 "Windows 전용" 명시. `cpp_learning.cpp` 는 C++20 `<format>` 필요
-- [ ] `text_dungeon_rpg.cpp` 4번째 줄 `#include <ctime>` 뒤에 BOM 문자(U+FEFF)가 섞여 있어 컴파일 실패 → 제거 필요
-- [ ] `04_projects` 도 CI 빌드 대상에 포함 (이식성 작업 후)
+- [x] `04_projects` 이식성: Windows 전용 2개는 README 표시만 하고 코드는 유지 (D15). `cpp_learning.cpp` 는 C++20 으로 빌드
+- [x] `text_dungeon_rpg.cpp` 4번째 줄 `#include <ctime>` 뒤에 BOM 문자(U+FEFF)가 섞여 있어 컴파일 실패 → 제거 필요
+- [x] `04_projects` 도 CI 빌드 대상에 포함 → `scripts/build_projects.sh` (Windows 전용 자동 제외)
 - [ ] 알고리즘 추가 후보: 세그먼트 트리, 플로이드–워셜, 벨만–포드, 에라토스테네스의 체 (Python 레포에도 추가되면 함께)
 - [ ] `.clang-format` 도입 여부 결정 (현재는 `.editorconfig` 로 들여쓰기만 통일)
+- [ ] `02_ps_notes/03_strings.md`: 절 번호가 20 → 24 로 건너뜀, Python 노트와 절 대응 점검
+- [x] 노트 코드 블록 컴파일 검사를 CI 에 추가 → `scripts/check_notes.py` (현재 01 의 2개, 05 의 6개 블록)
+- [ ] 기존 노트(01_basics, 03·04·07)의 완결된 코드 블록에도 `check:compile` 마커 확대
+- [ ] Python 레포 쪽 버그 제보: `is_prime(1) == True`
 
 ---
 
@@ -148,3 +156,12 @@ PR 은 **스택 방식**으로 올린다 (Phase N 의 PR base = Phase N-1 브랜
 | D6 | 테스트는 `testdata/<name>.out` 과 표준 출력 비교 (+ 코드 내 `assert`) | 별도 테스트 프레임워크 없이 "실행 결과 = 문서화된 예제 출력" 을 보장. 입력이 필요하면 `<name>.in` 추가 |
 | D7 | Python 쪽 버그는 C++ 포팅 시 바로잡고 파일 주석에 기록 | 예: `is_prime(1)` 이 `True` 를 반환하는 문제 |
 | D8 | `bisect_usage` → `lower_upper_bound` 로 이름 변경 | C++ 에는 `bisect` 가 없고 대응 함수가 `lower_bound`/`upper_bound` |
+| D9 | Python 의 `None` 반환은 `-1` (인덱스) 또는 `std::optional` (값) 으로 대응 | 인덱스는 PS 관례상 `-1`, 값이 없을 수 있는 결과(모듈러 역원)는 `std::optional` |
+| D10 | 알고리즘은 전역 변수 대신 함수 인자 또는 클래스로 상태를 갖는다 | Python 버전은 일부 전역 변수(`graph`, `distance`)를 쓴다. 다른 문제에 복사해 쓸 때 충돌이 없도록 모듈화 |
+| D11 | 거리·합·곱은 `long long` | Python int 는 오버플로가 없지만 C++ `int` 는 약 21억에서 넘침 |
+| D12 | `.gitignore` 에 `!03_algorithms/**/testdata/*.out` 예외 추가 | 기존 C++ 템플릿의 `*.out`(실행 파일) 규칙이 테스트 기대값 파일까지 무시해, 로컬에서 `git add` 해도 커밋되지 않는 문제가 있었음 |
+| D13 | 노트 코드도 `std::` 를 붙이고, 대회용 `bits/stdc++.h` + `using namespace std` 는 템플릿 끝에 주의점과 함께 소개 | 컨벤션(D4) 일관성 유지 + 실제 코테 환경의 관습도 알려주기 위함 |
+| D14 | 기존 노트 03 · 07 · 08 본문은 이번에 손대지 않음 | 내용이 이미 충실하고, 서식·번호 정리는 Phase 3 백로그에서 별도 PR 로 |
+| D15 | Windows 전용 프로젝트(`snake_game`, `text_dungeon_rpg`)는 플랫폼 분기 없이 README 에 "Windows 전용" 표시만 | 학습용 예제라 원본 구조 유지가 우선. 대신 CI 는 `<windows.h>`/`<conio.h>` 포함 여부로 자동 제외해 목록 관리가 필요 없게 함 |
+| D16 | `04_projects` CI 는 컴파일만 (실행 X), `-std=c++20`, g++ 만 | 대화형 프로그램이라 입력 없이 실행 불가. `cpp_learning.cpp` 가 `<format>` 사용 |
+| D17 | 노트 코드 검사는 **옵트인 마커**(`<!-- check:compile -->`) 방식 | 노트에는 문장 조각·일부러 틀린 예(❌)가 많아 전체 검사는 오탐이 많음. 마커는 GitHub 렌더링에 보이지 않고, 블록 단위로 독립 컴파일 |

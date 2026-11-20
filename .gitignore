@@ -43,6 +43,9 @@
 # Build output (scripts/run_tests.sh)
 build/
 
+# Test expectations are NOT build output (overrides *.out above)
+!03_algorithms/**/testdata/*.out
+
 # Editors / OS
 .vscode/
 .idea/
