@@ -68,6 +68,10 @@ CXX=clang++ ./scripts/run_tests.sh     # 컴파일러 변경
 
 * 맨 위에 `# 제목` 과 한 줄 요약(`> ...`)을 둡니다.
 * 코드 블록에는 언어 태그(` ```cpp `)를 붙입니다.
+* 함수 하나 또는 프로그램 전체처럼 **혼자 컴파일되는 블록**에는 바로 위 줄에 `<!-- check:compile -->` 마커를 붙입니다. CI 가 컴파일해 봅니다.
+  * 자주 쓰는 표준 헤더는 자동으로 붙고, `main` 이 없으면 빈 `main` 이 추가됩니다.
+  * 함수 밖의 문장 조각(`std::cin >> n;` 등)과 일부러 틀린 예(`❌`)가 들어간 블록에는 붙이지 않습니다.
+  * 로컬 검사: `python3 scripts/check_notes.py` (파일 지정 가능)
 * 다른 노트로 링크할 때는 상대 경로(`./04_libraries.md#...`)를 씁니다.
 * 새 노트를 추가하면 [README.md](./README.md) 목차에도 추가합니다.
 
@@ -78,6 +82,6 @@ CXX=clang++ ./scripts/run_tests.sh     # 컴파일러 변경
   * `feat:` 새 코드, `docs:` 노트/문서, `fix:` 버그 수정, `refactor:` 구조 변경, `test:` 테스트, `ci:` CI 설정
 * PR 은 한 가지 주제만 담습니다. 큰 작업은 [ROADMAP](./docs/ROADMAP.md) 의 Phase 단위로 나눕니다.
 * PR 체크리스트
-  - [ ] `./scripts/run_tests.sh` 통과
+  - [ ] `./scripts/run_tests.sh` 통과 (노트를 고쳤다면 `python3 scripts/check_notes.py` 도)
   - [ ] README / ROADMAP 링크·진행 상태 갱신
   - [ ] 새 파일 이름이 네이밍 규칙을 따름

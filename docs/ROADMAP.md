@@ -39,7 +39,8 @@ Cpp-exercise/
 ├── 04_projects/              # 콘솔 미니 프로젝트 (기존 예제 코드)
 ├── scripts/
 │   ├── run_tests.sh          # 03_algorithms 전체 빌드 + 출력 비교
-│   └── build_projects.sh     # 04_projects 컴파일 확인 (Windows 전용 제외)
+│   ├── build_projects.sh     # 04_projects 컴파일 확인 (Windows 전용 제외)
+│   └── check_notes.py        # 노트의 마커 붙은 코드 블록 컴파일 확인
 └── .github/workflows/ci.yml  # g++ / clang++ 빌드 · 테스트
 ```
 
@@ -123,9 +124,10 @@ Python 의 `03_algorithms/<category>/<name>.py` → C++ 의 `03_algorithms/<cate
 | 1 | 테스트 스크립트 · CI · `03_algorithms` 33개 C++ 포팅 + testdata | `feat/algorithms-cpp` | ✅ PR #2 (g++ 15 / clang++ 22 에서 33/33 통과) |
 | 2 | `02_ps_notes` 신규 노트 4개 + `04_libraries` 정리 + README "이럴 땐 여기" | `docs/ps-notes` | ✅ PR #3 |
 | 3-1 | `04_projects` 빌드 정리: BOM 제거, 이식 가능한 프로젝트 CI 빌드 | `fix/projects-build` | ✅ PR #4 |
+| 3-2 | 노트 코드 블록 컴파일 검사 (`<!-- check:compile -->` 마커 + CI) | `ci/check-notes` | ✅ PR #5 |
 | 3-x | 나머지 후속 정리 (아래 백로그) | — | 📋 계획 |
 
-PR 은 **스택 방식**으로 올린다 (Phase N 의 PR base = Phase N-1 브랜치). 앞 PR 이 머지되면 GitHub 이 다음 PR 의 base 를 `main` 으로 자동 변경한다 (머지 시 브랜치 삭제 기준). **머지 순서: Phase 0 → 1 → 2 → 3-1.**
+PR 은 **스택 방식**으로 올린다 (Phase N 의 PR base = Phase N-1 브랜치). 앞 PR 이 머지되면 GitHub 이 다음 PR 의 base 를 `main` 으로 자동 변경한다 (머지 시 브랜치 삭제 기준). **머지 순서: Phase 0 → 1 → 2 → 3-1 → 3-2.**
 
 ### Phase 3 백로그 (후속 작업 후보)
 
@@ -136,7 +138,8 @@ PR 은 **스택 방식**으로 올린다 (Phase N 의 PR base = Phase N-1 브랜
 - [ ] 알고리즘 추가 후보: 세그먼트 트리, 플로이드–워셜, 벨만–포드, 에라토스테네스의 체 (Python 레포에도 추가되면 함께)
 - [ ] `.clang-format` 도입 여부 결정 (현재는 `.editorconfig` 로 들여쓰기만 통일)
 - [ ] `02_ps_notes/03_strings.md`: 절 번호가 20 → 24 로 건너뜀, Python 노트와 절 대응 점검
-- [ ] 노트 코드 블록 컴파일 검사를 CI 에 추가할지 검토 (Phase 2 에서는 05 의 템플릿 전부와 01 의 템플릿을 수동 검사)
+- [x] 노트 코드 블록 컴파일 검사를 CI 에 추가 → `scripts/check_notes.py` (현재 01 의 2개, 05 의 6개 블록)
+- [ ] 기존 노트(01_basics, 03·04·07)의 완결된 코드 블록에도 `check:compile` 마커 확대
 - [ ] Python 레포 쪽 버그 제보: `is_prime(1) == True`
 
 ---
@@ -161,3 +164,4 @@ PR 은 **스택 방식**으로 올린다 (Phase N 의 PR base = Phase N-1 브랜
 | D14 | 기존 노트 03 · 07 · 08 본문은 이번에 손대지 않음 | 내용이 이미 충실하고, 서식·번호 정리는 Phase 3 백로그에서 별도 PR 로 |
 | D15 | Windows 전용 프로젝트(`snake_game`, `text_dungeon_rpg`)는 플랫폼 분기 없이 README 에 "Windows 전용" 표시만 | 학습용 예제라 원본 구조 유지가 우선. 대신 CI 는 `<windows.h>`/`<conio.h>` 포함 여부로 자동 제외해 목록 관리가 필요 없게 함 |
 | D16 | `04_projects` CI 는 컴파일만 (실행 X), `-std=c++20`, g++ 만 | 대화형 프로그램이라 입력 없이 실행 불가. `cpp_learning.cpp` 가 `<format>` 사용 |
+| D17 | 노트 코드 검사는 **옵트인 마커**(`<!-- check:compile -->`) 방식 | 노트에는 문장 조각·일부러 틀린 예(❌)가 많아 전체 검사는 오탐이 많음. 마커는 GitHub 렌더링에 보이지 않고, 블록 단위로 독립 컴파일 |
