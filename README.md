@@ -2,7 +2,6 @@
 ![C++ logo](https://img.shields.io/badge/C++-00599C?style=for-the-badge&logo=cplusplus&logoColor=white)
 
 C++ 를 공부하면서 만든 학습 자료입니다. **C++ 기초 → 코테용 노트 → 알고리즘 구현** 순서로 구성했습니다.
-[Warming-Up-for-Python](https://github.com/Devleu0/Warming-Up-for-Python) 의 C++ 버전으로, 같은 주제는 같은 폴더 · 같은 파일명에 있습니다.
 
 | 폴더 | 내용 | 이런 사람에게 |
 | --- | --- | --- |
@@ -10,8 +9,6 @@ C++ 를 공부하면서 만든 학습 자료입니다. **C++ 기초 → 코테�
 | [02_ps_notes](./02_ps_notes) | 코딩 테스트용 치트시트 | 다른 언어는 익숙하고, 코테 전에 C++ 를 훑고 싶음 |
 | [03_algorithms](./03_algorithms) | 알고리즘 · 자료구조 구현 코드 | 특정 알고리즘 구현을 보고 싶음 |
 | [04_projects](./04_projects) | 콘솔 미니 프로젝트 | 배운 문법으로 작은 프로그램을 만들어 보고 싶음 |
-
-> 재구성 작업의 기획 · 진행 상태는 [docs/ROADMAP.md](./docs/ROADMAP.md), 기여 규칙은 [CONTRIBUTING.md](./CONTRIBUTING.md) 에 있습니다.
 
 ---
 
