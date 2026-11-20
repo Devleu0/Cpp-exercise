@@ -19,3 +19,11 @@ jobs:
         env:
           CXX: ${{ matrix.cxx }}
         run: bash scripts/run_tests.sh
+
+  projects:
+    name: 04_projects build (g++)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build (Windows 전용 파일은 자동 제외)
+        run: bash scripts/build_projects.sh
